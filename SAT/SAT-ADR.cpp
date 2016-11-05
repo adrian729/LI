@@ -380,5 +380,6 @@ int main(){
 
 - Ordenar per tamany de clausules on apareix un lit tambe! (mitjana o algo per l'estil).
 
+- VSIDS. (Anar "resetejant" punts, els mes "propers" temporalment tenen MES importancia! (anar dividint per 2 les puntuacions cada X temps, per exemple))
 
 */

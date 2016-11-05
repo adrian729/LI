@@ -8,7 +8,8 @@ camino(EstadoActual,EstadoFinal,CaminoHastaAhora,CaminoTotal,N,P,MP):-
 	MP =:= (P + 1), unPaso(EstadoActual,EstadoFinal,N),
 	camino(EstadoFinal,EstadoFinal,[EstadoFinal|CaminoHastaAhora],CaminoTotal,N,MP,MP).
 
-
+solucionOptima:-
+	solucionOptima(21,191).
 % N pel tamany del taulell, P el nombre de pasos exactes que volem, M el maxim intents.
 solucionOptima(N,MP):-
 	N > 0, MP >= 0,
