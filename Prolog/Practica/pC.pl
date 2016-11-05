@@ -1,9 +1,10 @@
+% max numProds, list prods
 shopping(K,L):- shopping(0,K,L,[],0).
-
+% numProds act, max numProds, list prods, list nuts, numNuts
 shopping(_,_,[],_,NN):-
 	numNutrients(NN2), NN >= NN2.
 shopping(K,KM,[P|LI],N,NN):-
-	K < KM, K2 is K + 1, product(P,PN),	
+	K < KM, K2 is K + 1, product(P,PN),
 	addNuts(PN,N,N2,A),
 	NN2 is NN + A, A > 0,
 	shopping(K2,KM,LI,N2,NN2),
