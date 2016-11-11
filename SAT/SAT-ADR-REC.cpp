@@ -364,6 +364,8 @@ int main(){
 /*IDEES:
 
 - Ordenar per tamany de clausules on apareix un lit tambe! (mitjana o algo per l'estil).
+- Nova heuristica ordenacio: [X*(max(nClausPos(l), nClausNeg(l))) + Y*(min(nClausPos(l), nClausNeg(l)))] + Z
+    Z = f(sum_claus_i_l[tamany_claus(i)])
 
 - VSIDS. (Anar "resetejant" punts, els mes "propers" temporalment tenen MES importancia! (anar dividint per 2 les puntuacions cada X temps, per exemple))
 

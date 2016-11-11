@@ -9,6 +9,8 @@ using namespace std;
 #define TRUE 1
 #define FALSE 0
 
+#define ADD_HEUR 100
+
 uint numVars;
 uint numClauses;
 vector<vector<int> > clauses;
@@ -20,9 +22,8 @@ int indexLastDecidedLit;//index a decidedLits de l'ultim literal decidid.
 vector<vector<int> > posLitClauses;//clausules on apareix cada literal positivament. numVars+1 posicions (posicio 0 no es fa servir).
 vector<vector<int> > negLitClauses;//clausules on apareix cada literal negativament. numVars+1 posicions (posicio 0 no es fa servir).
 vector<int> sortedLits;//literals ordenats per nombre d'aparicions. numVars+1 posicions (posicio 0 no es fa servir).
-stack<int> propagateStack;//pila de literals trobats per propagar.
-
-
+vector<int> posOnSortedLits;//posicio de cada literal a sortedLits (quina posicio ocupa el lit).
+vector<int> heuristic;//valor heuristic de cada literal.
 //TMP
 void writeClauses(){
     for(int i = 0; i < clauses.size(); ++i){
@@ -36,7 +37,8 @@ void writeClauses(){
 void writeSortedLits(){
     for(int i = 0; i < sortedLits.size(); ++i){
         cout << sortedLits[i] << " pos: " << posLitClauses[sortedLits[i]].size()
-             << " neg: " << negLitClauses[sortedLits[i]].size() << endl;
+             << " neg: " << negLitClauses[sortedLits[i]].size()
+             << " heur: " << heuristic[sortedLits[i]] << endl;
     }
     cout << 0 << endl;
 }
@@ -172,6 +174,26 @@ void initSortedLits(){
         sortedLits[i] = i;
     }
     quicksortLits(1, numVars);
+    posOnSortedLits.resize(numVars+1);
+    for(int i = 0; i < numVars+1; ++i){
+        posOnSortedLits[sortedLits[i]] = i;
+    }
+}
+
+//Possa el lit on li correspongui a la llsita sortedlits
+void sortLitHeur(int lit){
+    int posLitOnSorted = posOnSortedLits[lit];
+    for(int i = posLitOnSorted; i > 1 and heuristic[sortedLits[i]] >= heuristic[sortedLits[i-1]]; --i){
+        int tmp = sortedLits[i];
+        sortedLits[i] = sortedLits[i-1];
+        sortedLits[i-1] = tmp;
+    }
+}
+
+void restartLitHeur(){
+    for(int i = 1; i < numVars+1; ++i){
+        heuristic[i] /= 2;
+    }
 }
 
 int currentValueInModel(int lit){
@@ -220,11 +242,19 @@ bool propagate(int lit){
         }
         if(not someTrue and countUndef == 0){
             //*CHI*/cout << "conf trobat propagant des de " << lit << endl;
+            //Per cada lit de la clausula que ha fallat, afegim ADD_HEUR a la seva heuristica 
+            //i el possem on li correspongui del vector de literals ordenats.
+            for(int i = 0; i < clauses[clauseIndex].size(); ++i){
+                int lit = clauses[clauseIndex][i];
+                if(lit < 0) lit = -lit;
+                heuristic[lit] += ADD_HEUR;
+                sortLitHeur(lit);
+            }
             return false;//conflict, need backtrack.
         }
         else if(not someTrue and countUndef == 1){//Hem trobat per on propagar altre cop.
-            propagateStack.push(lastUndef);
             setLiteralToTrue(lastUndef);//Afegeix lit a modelStack (i augmenta apuntador corresponent).
+            if(not propagate(lastUndef)) return false;
             //*CHI*/cout << "afegit a propSTack lit " << lastUndef << " per clausula " << clauseTmp << endl;
         }
     }    
@@ -251,7 +281,7 @@ int backtrack(){
 // Heuristic for finding the next decision literal:
 int getNextDecisionLiteral(){
     // stupid heuristic:
-    for (uint i = 1; i <= numVars; ++i){
+    for (int i = 1; i <= numVars; ++i){
         // returns first UNDEF var, positively or neg. Lits ordered by appearances.
         if (model[sortedLits[i]] == UNDEF){
                 int retVal = sortedLits[i];
@@ -299,6 +329,7 @@ int main(){
     indexLastLit = -1;
     decidedLits.resize(numVars,0);
     indexLastDecidedLit = -1;
+    heuristic.resize(numVars+1,0);
     initSortedLits();
 
     int nextLitProp;
@@ -311,24 +342,31 @@ int main(){
             nextLitProp = clauses[i][0];
             int val = currentValueInModel(nextLitProp);
             if (val == UNDEF){
-                setLiteralToTrue(nextLitProp);
-                propagateStack.push(nextLitProp);
-                while(not propagateStack.empty()){
-                    nextLitProp = propagateStack.top();
-                    propagateStack.pop();
-                    if(not propagate(nextLitProp)){
-                        cout << "UNSATISFIABLE" << endl;
-                        return 10;
-                    }
+                setLiteralToTrue(nextLitProp);    
+                if(not propagate(nextLitProp)){
+                    cout << "UNSATISFIABLE" << endl;
+                    return 10;
                 }
             }
         }
     }
     
     //*CHI*/cout << "END initial unit clauses" << endl;
-
+    int cont = 0;
+        //100 -> nunca
+        //150 -> nunca
+        //200 nV*40
+        //Better 250 (now) numVars*35
+        //Better 300 (now) numVars*50
+    int maxCount = numVars*30;
     // DPLL algorithm
     while(true) {
+        
+        if(cont > maxCount){
+            cout << "restard" << endl;
+            restartLitHeur();
+            cont = 0;
+        }
 
         //Decisió de lits.
         nextLitProp = getNextDecisionLiteral();
@@ -348,31 +386,23 @@ int main(){
         ++indexLastDecidedLit;
         decidedLits[indexLastDecidedLit] = nextLitProp;
         //*CHI*/cout << "Afegit decision " << nextLitProp << " a " << indexLastDecidedLit << endl;
-        //Prepara propagateStack
-        propagateStack.push(nextLitProp);
 
         //Propagacio.
-        while(not propagateStack.empty()){
-            nextLitProp = propagateStack.top();
-            propagateStack.pop();
-            if(not propagate(nextLitProp)){
-                //Si troba conflicte, prova a fer backtracking.
-                nextLitProp = backtrack();
-                if(nextLitProp == 0){
-                    //En cas de no poder fer el backtracking INSAT.
-                    cout << "UNSATISFIABLE" << endl;
-                    return 10;
-                }
-                clear(propagateStack);
-                propagateStack.push(nextLitProp);
-            }                 
+        while(not propagate(nextLitProp)){
+            //Si troba conflicte, prova a fer backtracking.
+            nextLitProp = backtrack();
+            if(nextLitProp == 0){
+                //En cas de no poder fer el backtracking INSAT.
+                cout << "UNSATISFIABLE" << endl;
+                return 10;
+            }
         }
-        clear(propagateStack);//Per si hi ha hagut una fallada i queda algo a la pila
+
+        ++cont;
 
     }
 
 }
-
 
 
 
