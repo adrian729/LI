@@ -41,6 +41,7 @@ lectureOfCourse(C,L) :- course(_,C,N,_,_), between(1,N,L). % given C, computes L
 roomOfCourse(C,RC)   :- course(_,C,_,R,_), concat(_,[RC|_],R). %given C, computes RC
 teacherOfCourse(C,TC) :- course(_,C,_,_,T), concat(_,[TC|_],T). %given C, computes RC
 courseOfYear(Y,C)    :- course(Y,C,_,_,_). % given Y, computes C
+timeOfCourse(C,Time) :- courseOfYear(Y,C), year(Y,Time).
 
 slot(S)                 :- between(1,60,S). % Monday slots [1,..,12], Tuesday [13,..24]
 slotOfDay(D,S)          :- hour(H), S is (D-1)*12 + H. % given D, computes S
@@ -58,22 +59,27 @@ concat([X|L1],L2,[X|L3]):- concat(L1,L2,L3).
 
 writeClauses:-
     oneSlotPerLecture,
-    oneLessCourseLecturePerDay,
-    noLectureWrongTime,
+    %oneLessCourseLecturePerDay,
+    %noLectureWrongTime,
     %atMost5YearLecturesEachDay,
-    lecturesYearSameTime,
+    %lecturesYearSameTime,
     oneRoomPerCourse,
     oneTeacherPerCourse,
-    timeOfTeacherPerCourse,
+    %timeOfTeacherPerCourse,
     true.
 
-oneSlotPerLecture:- % each lecture only one slot
-    course(C), lectureOfCourse(C,L),
-    findall(cls-C-L-S,slot(S),Lits), exactly(1,Lits),
+% each lecture only one slot
+oneSlotPerLecture:- 
+    course(C), lectureOfCourse(C,L), timeOfCourse(C,morning),
+    findall(cls-C-L-S,(day(D),morningSlotOfDay(D,S)),Lits), exactly(1,Lits),
+    fail.
+oneSlotPerLecture:- 
+    course(C), lectureOfCourse(C,L), timeOfCourse(C,afternoon),
+    findall(cls-C-L-S,(day(D),afternoonSlotOfDay(D,S)),Lits), exactly(1,Lits),
     fail.
 oneSlotPerLecture.
-
-oneLessCourseLecturePerDay:- % at most one course lecture each day
+% at most one course lecture each day
+oneLessCourseLecturePerDay:-
     course(C), day(D),
     findall(cls-C-L-S,(lectureOfCourse(C,L),slotOfDay(D,S)),Lits), atMost(1,Lits),
     fail.
