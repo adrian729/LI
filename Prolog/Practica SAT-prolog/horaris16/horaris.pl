@@ -47,6 +47,12 @@ slot(S)                 :- between(1,60,S). % Monday slots [1,..,12], Tuesday [1
 slotOfDay(D,S)          :- hour(H), S is (D-1)*12 + H. % given D, computes S
 morningSlotOfDay(D,S)   :- between(1,6,H),  S is (D-1)*12 + H. % given D, computes S
 afternoonSlotOfDay(D,S) :- between(7,12,H), S is (D-1)*12 + H. % given D, computes S
+timeSlotOfDay(D,S,morning) :- morningSlotOfDay(D,S).
+timeSlotOfDay(D,S,afternoon) :- afternoonSlotOfDay(D,S).
+morningSlot(S)          :- slot(S), S12 is (S - 1) mod 12, between(0,5,S12).
+afternoonSlot(S)        :- slot(S), S12 is (S - 1) mod 12, between(6,11,S12).
+timeSlot(S,morning)     :- morningSlot(S).
+timeSlot(S,afternoon)   :- afternoonSlot(S).
 
 %% other
 concat([],L2,L2).
@@ -57,75 +63,100 @@ concat([X|L1],L2,[X|L3]):- concat(L1,L2,L3).
 % cr-C-R    : course C is taught at room R
 % cls-C-L-S : lecture L of course C is given at slot S (slots between 1 and 60)
 
+% ycs-Y-C-S
+% cs-C-S
+% ys-Y-S
+
 writeClauses:-
+    defineYearPerCoursePerSlot,
+    defineCoursePerSlot,
+    defineYearPerSlot,
+    defineTeacherPerCoursePerSlot,
     oneSlotPerLecture,
-    %oneLessCourseLecturePerDay,
-    %noLectureWrongTime,
-    %atMost5YearLecturesEachDay,
-    %lecturesYearSameTime,
+    oneLessCourseLecturePerDay,
+    oneYearCoursePerSlot,
+    atMost5YearLecturesDay,
     oneRoomPerCourse,
     oneTeacherPerCourse,
-    %timeOfTeacherPerCourse,
+    oneTeacherPerLecturePerSlot,
     true.
 
-% each lecture only one slot
-oneSlotPerLecture:- 
-    course(C), lectureOfCourse(C,L), timeOfCourse(C,morning),
-    findall(cls-C-L-S,(day(D),morningSlotOfDay(D,S)),Lits), exactly(1,Lits),
+% define new vars:
+% ycs-Y-C-S
+defineYearPerCoursePerSlot:-
+    year(Y,Time), courseOfYear(Y,C), timeSlot(S,Time),
+    findall(cls-C-L-S,lectureOfCourse(C,L),Lits),
+    expressOr(ycs-Y-C-S,Lits),
     fail.
-oneSlotPerLecture:- 
-    course(C), lectureOfCourse(C,L), timeOfCourse(C,afternoon),
-    findall(cls-C-L-S,(day(D),afternoonSlotOfDay(D,S)),Lits), exactly(1,Lits),
+defineYearPerCoursePerSlot.
+% cs-C-S
+defineCoursePerSlot:-
+    course(C), timeOfCourse(C,Time), timeSlot(S,Time),
+    findall(cls-C-L-S,lectureOfCourse(C,L),Lits),
+    expressOr(cs-C-S,Lits),
+    fail.
+defineCoursePerSlot.
+% ys-Y-S
+defineYearPerSlot:-
+    year(Y,Time), timeSlot(S,Time),
+    findall(cls-C-L-S,(courseOfYear(Y,C),lectureOfCourse(C,L)),Lits),
+    expressOr(ys-Y-S,Lits),
+    fail.
+defineYearPerSlot.
+% tcs-T-C-S
+defineTeacherPerCoursePerSlot:-
+    teacher(T,Time), teacherOfCourse(C,T), timeOfCourse(C,Time), timeSlot(S,Time),
+    findall(cls-C-L-S,lectureOfCourse(C,L),Lits),
+    expressOr(tcs-T-C-S,Lits),
+    fail.
+defineTeacherPerCoursePerSlot.
+
+% each lecture only one slot && no lectures on wrong year time
+oneSlotPerLecture:-
+    course(C), lectureOfCourse(C,L), timeOfCourse(C,Time),
+    findall(cls-C-L-S,timeSlot(S,Time),Lits), exactly(1,Lits),
     fail.
 oneSlotPerLecture.
 % at most one course lecture each day
 oneLessCourseLecturePerDay:-
-    course(C), day(D),
-    findall(cls-C-L-S,(lectureOfCourse(C,L),slotOfDay(D,S)),Lits), atMost(1,Lits),
+    course(C), day(D), timeOfCourse(C,Time),
+    findall(cls-C-L-S,(lectureOfCourse(C,L),timeSlotOfDay(D,S,Time)),Lits), atMost(1,Lits),
     fail.
 oneLessCourseLecturePerDay.
-
-noLectureWrongTime:- % no lectures on wrong year time
-    course(C), lectureOfCourse(C,L), courseOfYear(Y,C), year(Y,afternoon), day(D),
-    findall(cls-C-L-S,morningSlotOfDay(D,S),Lits), exactly(0,Lits),
+% at most one year course lecture each slot
+oneYearCoursePerSlot:-
+    year(Y,Time),
+    timeSlot(S,Time),
+    findall(ycs-Y-C-S,courseOfYear(Y,C),Lits), atMost(1,Lits),
     fail.
-noLectureWrongTime:-
-    course(C), lectureOfCourse(C,L), courseOfYear(Y,C), year(Y,morning), day(D),
-    findall(cls-C-L-S,afternoonSlotOfDay(D,S),Lits), exactly(0,Lits),
+oneYearCoursePerSlot.
+% at most 5 lectures of a given year can be taught every day
+atMost5YearLecturesDay:-
+    year(Y,Time), day(D),
+    findall(ys-Y-S,timeSlotOfDay(D,S,Time),Lits),
+    negateAll(Lits,NLits), atLeast(1,NLits),
     fail.
-noLectureWrongTime.
+atMost5YearLecturesDay.
 
-%MASSA LENT!!!!!!!!!!!!!!! (ramificacio extreeemeeee)
-atMost5YearLecturesEachDay:- 
-    day(D), year(Y,_),
-    findall(cls-C-L-S,(courseOfYear(Y,C),lectureOfCourse(C,L),slotOfDay(D,S)),Lits), atMost(5,Lits),
-    fail.
-atMost5YearLecturesEachDay.
-
-lecturesYearSameTime:- % two lectures belonging to the same year cannot be taught at the same time
-    year(Y,_), slot(S),
-    findall(cls-C-L-S,(courseOfYear(Y,C),lectureOfCourse(C,L)),Lits), atMost(1,Lits),
-    fail.
-lecturesYearSameTime.
-
-oneRoomPerCourse:-  % each course only one teacher
+% each course only one room
+oneRoomPerCourse:-
     course(C),
     findall(cr-C-R,roomOfCourse(C,R),Lits), exactly(1,Lits),
     fail.
 oneRoomPerCourse.
 
-oneTeacherPerCourse:- % each course only one teacher
-    course(C),
-    findall(ct-C-T,teacherOfCourse(C,T),Lits), exactly(1,Lits),
+% each course only one teacher && with same time as the course-year time
+oneTeacherPerCourse:-
+    course(C), timeOfCourse(C,Time),
+    findall(ct-C-T,(teacherOfCourse(C,T),(teacher(T,Time);teacher(T,both))),Lits), exactly(1,Lits),
     fail.
 oneTeacherPerCourse.
-
-timeOfTeacherPerCourse:- % each course have at least one teacher with same time as the course-year time
-    course(C), courseOfYear(Y,C), year(Y,Time),
-    findall(ct-C-T,(teacherOfCourse(C,T),(teacher(T,Time);teacher(T,both))),Lits), atLeast(1,Lits),
+% a teacher cannot teach two lectures simultaneously
+oneTeacherPerLecturePerSlot:-
+    teacher(T,Time), timeSlot(S,Time),
+    findall(tcs-T-C-S,(teacherOfCourse(C,T),timeOfCourse(C,Time)),Lits), atMost(1,Lits),
     fail.
-timeOfTeacherPerCourse.
-
+oneTeacherPerLecturePerSlot.
 
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% show the solution. Here M contains the literals that are true in the model:
