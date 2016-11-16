@@ -17,7 +17,7 @@
 
 %  - all lectures of a course are taught by the same teacher
 %  - all lectures of a course are taught at the same room OK!
-  - it is not possible to hold two lectures at the same room simultaneously
-  - a teacher cannot teach two lectures simultaneously
+%  - it is not possible to hold two lectures at the same room simultaneously
+%  - a teacher cannot teach two lectures simultaneously
 %  - at most 5 lectures of a given year can be taught every day OK!
 %  - two lectures belonging to the same year cannot be taught at the same time

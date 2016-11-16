@@ -71,14 +71,14 @@ writeClauses:-
     defineYearPerCoursePerSlot,
     defineCoursePerSlot,
     defineYearPerSlot,
-    defineTeacherPerCoursePerSlot,
     oneSlotPerLecture,
     oneLessCourseLecturePerDay,
     oneYearCoursePerSlot,
     atMost5YearLecturesDay,
     oneRoomPerCourse,
+    justOnceRoomPerSlot,
     oneTeacherPerCourse,
-    oneTeacherPerLecturePerSlot,
+    justOnceTeacherPerSlot,
     true.
 
 % define new vars:
@@ -103,13 +103,6 @@ defineYearPerSlot:-
     expressOr(ys-Y-S,Lits),
     fail.
 defineYearPerSlot.
-% tcs-T-C-S
-defineTeacherPerCoursePerSlot:-
-    teacher(T,Time), teacherOfCourse(C,T), timeOfCourse(C,Time), timeSlot(S,Time),
-    findall(cls-C-L-S,lectureOfCourse(C,L),Lits),
-    expressOr(tcs-T-C-S,Lits),
-    fail.
-defineTeacherPerCoursePerSlot.
 
 % each lecture only one slot && no lectures on wrong year time
 oneSlotPerLecture:-
@@ -144,6 +137,14 @@ oneRoomPerCourse:-
     findall(cr-C-R,roomOfCourse(C,R),Lits), exactly(1,Lits),
     fail.
 oneRoomPerCourse.
+% it is not possible to hold two lectures at the same room simultaneously
+justOnceRoomPerSlot:-
+    timeOfCourse(C1,Time), timeOfCourse(C2,Time), C1 \= C2,
+    roomOfCourse(C1,R), roomOfCourse(C2,R),
+    timeSlot(S,Time),
+    writeClause([\+cs-C1-S,\+cs-C2-S,\+cr-C1-R,\+cr-C2-R]),
+    fail.
+justOnceRoomPerSlot.
 
 % each course only one teacher && with same time as the course-year time
 oneTeacherPerCourse:-
@@ -152,11 +153,14 @@ oneTeacherPerCourse:-
     fail.
 oneTeacherPerCourse.
 % a teacher cannot teach two lectures simultaneously
-oneTeacherPerLecturePerSlot:-
-    teacher(T,Time), timeSlot(S,Time),
-    findall(tcs-T-C-S,(teacherOfCourse(C,T),timeOfCourse(C,Time)),Lits), atMost(1,Lits),
+justOnceTeacherPerSlot:-
+    timeOfCourse(C1,Time), timeOfCourse(C2,Time), C1 \= C2,
+    (teacher(T,Time);teacher(T,both)), teacherOfCourse(C1,T), teacherOfCourse(C2,T),
+    timeSlot(S,Time),
+    writeClause([\+cs-C1-S,\+cs-C2-S,\+ct-C1-T,\+ct-C2-T]),
     fail.
-oneTeacherPerLecturePerSlot.
+justOnceTeacherPerSlot.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% show the solution. Here M contains the literals that are true in the model:
