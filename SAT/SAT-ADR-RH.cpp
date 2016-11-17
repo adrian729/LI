@@ -310,7 +310,6 @@ int main(){
             checkmodel();
             cout << "SATISFIABLE" << endl;
             double segs = ((double)(clock() - tStart)/CLOCKS_PER_SEC);
-            double segs = ((double)(clock() - tStart)/CLOCKS_PER_SEC);
             cout << "TIME ELAPSED: " << segs << "s" << endl;
             cout << "DECISIONS MADE: " << decs << " lits." << endl;
             cout << "PROPAGATIONS/SECOND: " << (((double)props)/segs) << endl;
