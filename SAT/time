@@ -1,0 +1,71 @@
+#!/usr/bin/python3
+
+#by Petru Rares Sincraian
+
+
+from os import listdir
+from os.path import isfile, join
+import sys
+from subprocess import Popen, PIPE
+
+def getFiles(path):
+  return [f for f in listdir(path) if isfile(join(path, f))]
+
+def getPicosatData(sample):
+  sample = open(sample, 'r')
+  p = Popen(['picosat', '-v'], stdout=PIPE, stdin=sample)
+  out = p.communicate()[0].decode("utf-8") 
+  out = out.split('\n')
+  result = {}
+  for s in out:
+    if 'UNSATISFIABLE' in s:
+      result['sat'] = False
+    elif 'SATISFIABLE' in s:
+       result['sat'] = True
+    elif 'seconds total run time' in s:
+      result['time'] = float(s.split()[1])
+    elif 'decisions' in s:
+      result['decisions'] = s.split()[1]
+    elif 'propagations' in s:
+      result['prop/s'] = int(s.split()[1])
+  
+  if (0.00001 > abs(result['time'] - 0.0)):
+    result['time'] = 0.00001
+  
+  result['prop/s'] = round(float(result['prop/s'])/result['time'],2)
+  return result
+ 
+def getPetrusatData(sample, petrusat):
+  sample = open(sample, 'r')
+  p = Popen([petrusat], stdout=PIPE, stdin=sample)
+  out = p.communicate()[0].decode("utf-8") 
+  out = out.split('\n')
+  result = {}
+  for s in out:
+    if 'UNSATISFIABLE' in s:
+      result['sat'] = False
+    elif 'SATISFIABLE' in s:
+       result['sat'] = True
+    elif 'TIME ELAPSED:' in s:
+      result['time'] = round(float(s.split()[2]),2)
+    elif 'DECISIONS MADE:' in s:
+      result['decisions'] = int(s.split()[2])
+    elif 'PROPAGATIONS/SECOND:' in s:
+      result['prop/s'] = float(s.split()[1])
+  
+  return result
+  
+def compare(files, petrusatExec):
+  print("input\t\t\tp.time\t\tm.time\t\tp.decis\t\tm.decis\t\tp.prop/s\t\tm.prop/s\t\tp.sat\t\tm.sat")
+  for sample in files:
+    picosat = getPicosatData(sample)
+    petrusat = getPetrusatData(sample, petrusatExec)
+    print(sample.split('/')[1],picosat['time'],petrusat['time'],picosat['decisions'],petrusat['decisions'],picosat['prop/s'],petrusat['prop/s'],picosat['sat'],petrusat['sat'],sep='\t\t')
+
+if len(sys.argv) != 3:
+  print("Usage: script samples-path petrusat")
+  
+files = getFiles(sys.argv[1])
+files = [sys.argv[1] + sample for sample in files]
+petrusat = sys.argv[2]
+compare(files, petrusat)

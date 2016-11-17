@@ -331,10 +331,9 @@ int main(){
                 //En cas de no poder fer el backtracking INSAT.
                 cout << "UNSATISFIABLE" << endl;
                 double segs = ((double)(clock() - tStart)/CLOCKS_PER_SEC);
-                cout << "Execution time taken: " << segs << "s" << endl;
-                cout << "Decidits: " << decs << " lits." << endl;
-                cout << "Propagats: " << props << " lits." << endl;
-                cout << "Propagacions/s: " << (props/segs) << endl;
+                cout << "TIME ELAPSED: " << segs << "s" << endl;
+                cout << "DECISIONS MADE: " << decs << " lits." << endl;
+                cout << "PROPAGATIONS/SECOND: " << (((double)props)/segs) << endl;
                 return 10;
             }
             ++props;//propagacio feta al fer el backtracking (del negat de l'ultim que haviem decidit)
