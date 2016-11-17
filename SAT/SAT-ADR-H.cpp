@@ -24,6 +24,7 @@ vector<vector<int> > negLitClauses;//clausules on apareix cada literal negativam
 vector<int> sortedLits;//literals ordenats per nombre d'aparicions. numVars+1 posicions (posicio 0 no es fa servir).
 vector<int> posOnSortedLits;//posicio de cada literal a sortedLits (quina posicio ocupa el lit).
 vector<int> heuristic;//valor heuristic de cada literal.
+stack<int> propagateStack;//pila de literals trobats per propagar.
 
 //TMP
 void writeClauses(){
@@ -254,8 +255,8 @@ bool propagate(int lit){
             return false;//conflict, need backtrack.
         }
         else if(not someTrue and countUndef == 1){//Hem trobat per on propagar altre cop.
+            propagateStack.push(lastUndef);
             setLiteralToTrue(lastUndef);//Afegeix lit a modelStack (i augmenta apuntador corresponent).
-            if(not propagate(lastUndef)) return false;
             //*CHI*/cout << "afegit a propSTack lit " << lastUndef << " per clausula " << clauseTmp << endl;
         }
     }    
@@ -387,22 +388,30 @@ int main(){
         ++indexLastDecidedLit;
         decidedLits[indexLastDecidedLit] = nextLitProp;
         //*CHI*/cout << "Afegit decision " << nextLitProp << " a " << indexLastDecidedLit << endl;
+        //Prepara propagateStack
+        propagateStack.push(nextLitProp);
 
         //Propagacio.
-        while(not propagate(nextLitProp)){
-            //Si troba conflicte, prova a fer backtracking.
-            nextLitProp = backtrack();
-            if(nextLitProp == 0){
-                //En cas de no poder fer el backtracking INSAT.
-                cout << "UNSATISFIABLE" << endl;
-                return 10;
-            }
+        while(not propagateStack.empty()){
+            nextLitProp = propagateStack.top();
+            propagateStack.pop();
+            if(not propagate(nextLitProp)){
+                //Si troba conflicte, prova a fer backtracking.
+                nextLitProp = backtrack();
+                if(nextLitProp == 0){
+                    //En cas de no poder fer el backtracking INSAT.
+                    cout << "UNSATISFIABLE" << endl;
+                    return 10;
+                }
+                clear(propagateStack);
+                propagateStack.push(nextLitProp);
+            }                 
         }
+        clear(propagateStack);//Per si hi ha hagut una fallada i queda algo a la pila
 
         ++cont;
 
     }
-
 
 }
 

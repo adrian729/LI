@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <vector>
 #include <stack>
+#include <time.h>
 using namespace std;
 
 #define UNDEF -1
@@ -10,6 +11,9 @@ using namespace std;
 #define FALSE 0
 
 #define ADD_HEUR 100
+
+uint props;
+uint decs;
 
 uint numVars;
 uint numClauses;
@@ -24,48 +28,6 @@ vector<vector<int> > negLitClauses;//clausules on apareix cada literal negativam
 vector<int> sortedLits;//literals ordenats per nombre d'aparicions. numVars+1 posicions (posicio 0 no es fa servir).
 vector<int> posOnSortedLits;//posicio de cada literal a sortedLits (quina posicio ocupa el lit).
 vector<int> heuristic;//valor heuristic de cada literal.
-
-//TMP
-void writeClauses(){
-    for(int i = 0; i < clauses.size(); ++i){
-        for(int j = 0; j < clauses[i].size(); ++j){
-            cout << clauses[i][j] << " ";
-        }
-        cout << "0" << endl;
-    }
-}
-
-void writeSortedLits(){
-    for(int i = 0; i < sortedLits.size(); ++i){
-        cout << sortedLits[i] << " pos: " << posLitClauses[sortedLits[i]].size()
-             << " neg: " << negLitClauses[sortedLits[i]].size()
-             << " heur: " << heuristic[sortedLits[i]] << endl;
-    }
-    cout << 0 << endl;
-}
-
-void writeModel(){
-    for(int i = 0; i < model.size(); ++i){
-        cout << i << ": " << model[i] << endl;
-    }
-    cout << 0 << endl;
-}
-
-void writeDecided(){
-    for(int i = 0; i < decidedLits.size(); ++i){
-        cout << i << ": " << decidedLits[i] << endl;
-    }
-    cout << 0 << endl;
-}
-
-void writeStack(){
-    for(int i = 0; i < modelStack.size(); ++i){
-        cout << i << ": " << modelStack[i] << endl;
-    }
-    cout << 0 << endl;
-}
-//FI TMP
-
 
 void readClauses(){
   // Skip comments
@@ -187,7 +149,10 @@ void sortLitHeur(int lit){
     for(int i = posLitOnSorted; i > 1 and heuristic[sortedLits[i]] >= heuristic[sortedLits[i-1]]; --i){
         int tmp = sortedLits[i];
         sortedLits[i] = sortedLits[i-1];
+        posOnSortedLits[sortedLits[i]] = i;
         sortedLits[i-1] = tmp;
+        posOnSortedLits[sortedLits[i-1]] = i-1;
+
     }
 }
 
@@ -209,18 +174,15 @@ int currentValueInModel(int lit){
 void setLiteralToTrue(int lit){
     ++indexLastLit;
     modelStack[indexLastLit] = lit;
-    //*CHI*/cout << "setLitToTrue " << lit << " a " << indexLastLit << endl;
     if (lit > 0){
         model[lit] = TRUE;
     }
     else{
         model[-lit] = FALSE;
     }
-    //*CHI*/cout << model[abs(lit)] << endl;
 }
 
 bool propagate(int lit){
-    //*CHI*/cout << "propagant " << lit << endl;
     vector<vector<int> > *litClauses = &negLitClauses;
     if(lit < 0){
         lit = -lit;
@@ -231,18 +193,15 @@ bool propagate(int lit){
         int lastUndef = 0;
         bool someTrue = false;
         int clauseIndex = (*litClauses)[lit][i];
-        //*CHI*/int clauseTmp = -1;
         for(int j = 0; j < clauses[clauseIndex].size(); ++j){
             int val = currentValueInModel(clauses[clauseIndex][j]);
             if(val == TRUE) someTrue = true;
             else if(val == UNDEF){
                 ++countUndef;
                 lastUndef = clauses[clauseIndex][j];
-                //*CHI*/clauseTmp = clauseIndex;
             }
         }
         if(not someTrue and countUndef == 0){
-            //*CHI*/cout << "conf trobat propagant des de " << lit << endl;
             //Per cada lit de la clausula que ha fallat, afegim ADD_HEUR a la seva heuristica 
             //i el possem on li correspongui del vector de literals ordenats.
             for(int i = 0; i < clauses[clauseIndex].size(); ++i){
@@ -254,12 +213,11 @@ bool propagate(int lit){
             return false;//conflict, need backtrack.
         }
         else if(not someTrue and countUndef == 1){//Hem trobat per on propagar altre cop.
+            ++props;//Estem propagant un lit nou!
             setLiteralToTrue(lastUndef);//Afegeix lit a modelStack (i augmenta apuntador corresponent).
             if(not propagate(lastUndef)) return false;
-            //*CHI*/cout << "afegit a propSTack lit " << lastUndef << " per clausula " << clauseTmp << endl;
         }
     }    
-    //*CHI*/cout << "fi prop de " << lit << endl;
     return true;
 }
 
@@ -267,14 +225,11 @@ int backtrack(){
     if(indexLastDecidedLit < 0) return 0;
     while(modelStack[indexLastLit] != decidedLits[indexLastDecidedLit]){
         model[abs(modelStack[indexLastLit])] = UNDEF;
-        //*CHI*/cout << "bck " << abs(modelStack[indexLastLit]) << " possat a " << model[abs(modelStack[indexLastLit])] << endl;
         --indexLastLit;
     }
     --indexLastLit;
     int lit = -decidedLits[indexLastDecidedLit];
-    //*CHI*/cout << "fet backtracking fins a " << -lit << endl;
     setLiteralToTrue(lit);
-    //*CHI*/cout << "acabat backtracking" << endl;
     --indexLastDecidedLit;
     return lit;
 }
@@ -305,11 +260,6 @@ void checkmodel(){
             for (int j = 0; j < clauses[i].size(); ++j)
                     cout << clauses[i][j] << " ";
             cout << endl;
-            //*CHI*/writeModel();
-            //*CHI*/cout << endl << "indDec: " << indexLastDecidedLit << endl;
-            //*CHI*/writeDecided();
-            //*CHI*/cout << endl << "indStack " << indexLastLit << endl;
-            //*CHI*/writeStack();
             exit(1);
         }
     }
@@ -333,26 +283,10 @@ int main(){
     heuristic.resize(numVars+1,0);
     initSortedLits();
 
-    int nextLitProp;
+    decs = 0;
+    props = 0;
 
-    //*CHI*/cout << "Initial unit clauses" << endl;
-    /*
-    // Take care of initial unit clauses, if any
-    for (uint i = 0; i < numClauses; ++i){
-        if (clauses[i].size() == 1) {
-            nextLitProp = clauses[i][0];
-            int val = currentValueInModel(nextLitProp);
-            if (val == UNDEF){
-                setLiteralToTrue(nextLitProp);    
-                if(not propagate(nextLitProp)){
-                    cout << "UNSATISFIABLE" << endl;
-                    return 10;
-                }
-            }
-        }
-    }
-    */
-    //*CHI*/cout << "END initial unit clauses" << endl;
+    int nextLitProp;
     int cont = 0;
         //100 -> nunca
         //150 -> nunca
@@ -360,11 +294,12 @@ int main(){
         //Better 250 (now) numVars*35
         //Better 300 (now) numVars*50
     int maxCount = numVars*50;
+    //Comencem a comptar el temps de programa:
+    clock_t tStart = clock();
     // DPLL algorithm
     while(true) {
         
         if(cont > maxCount){
-            //*CHI*/cout << "restard" << endl;
             restartLitHeur();
             cont = 0;
         }
@@ -374,11 +309,11 @@ int main(){
         if(nextLitProp == 0) {
             checkmodel();
             cout << "SATISFIABLE" << endl;
-            //*CHI*/writeModel();
-            //*CHI*/cout << endl << endl;
-            //*CHI*/writeDecided();
-            //*CHI*/cout << endl << endl;
-            //*CHI*/writeStack();
+            double segs = ((double)(clock() - tStart)/CLOCKS_PER_SEC);
+            cout << "Execution time taken: " << segs << "s" << endl;
+            cout << "Decidits: " << decs << " lits." << endl;
+            cout << "Propagats: " << props << " lits." << endl;
+            cout << "Propagacions/s: " << (((double)props)/segs) << endl;
             return 20;
         }
         // start new decision level:
@@ -386,7 +321,7 @@ int main(){
         //Afegeix a decidedLit i augmentar apuntador.
         ++indexLastDecidedLit;
         decidedLits[indexLastDecidedLit] = nextLitProp;
-        //*CHI*/cout << "Afegit decision " << nextLitProp << " a " << indexLastDecidedLit << endl;
+        ++decs;//Hem decidit un lit
 
         //Propagacio.
         while(not propagate(nextLitProp)){
@@ -395,25 +330,18 @@ int main(){
             if(nextLitProp == 0){
                 //En cas de no poder fer el backtracking INSAT.
                 cout << "UNSATISFIABLE" << endl;
+                double segs = ((double)(clock() - tStart)/CLOCKS_PER_SEC);
+                cout << "Execution time taken: " << segs << "s" << endl;
+                cout << "Decidits: " << decs << " lits." << endl;
+                cout << "Propagats: " << props << " lits." << endl;
+                cout << "Propagacions/s: " << (props/segs) << endl;
                 return 10;
             }
+            ++props;//propagacio feta al fer el backtracking (del negat de l'ultim que haviem decidit)
         }
 
         ++cont;
 
     }
 
-
 }
-
-
-
-/*IDEES:
-
-- Ordenar per tamany de clausules on apareix un lit tambe! (mitjana o algo per l'estil).
-- Nova heuristica ordenacio: [X*(max(nClausPos(l), nClausNeg(l))) + Y*(min(nClausPos(l), nClausNeg(l)))] + Z
-    Z = f(sum_claus_i_l[tamany_claus(i)])
-
-- VSIDS. (Anar "resetejant" punts, els mes "propers" temporalment tenen MES importancia! (anar dividint per 2 les puntuacions cada X temps, per exemple))
-
-*/

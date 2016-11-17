@@ -1,0 +1,5 @@
+UNSATISFIABLE
+Execution time taken: 69.2133s
+Decidits: 5614736 lits.
+Propagats: 332318806 lits.
+Propagacions/s: 4.80137e+06
