@@ -310,10 +310,10 @@ int main(){
             checkmodel();
             cout << "SATISFIABLE" << endl;
             double segs = ((double)(clock() - tStart)/CLOCKS_PER_SEC);
-            cout << "Execution time taken: " << segs << "s" << endl;
-            cout << "Decidits: " << decs << " lits." << endl;
-            cout << "Propagats: " << props << " lits." << endl;
-            cout << "Propagacions/s: " << (((double)props)/segs) << endl;
+            double segs = ((double)(clock() - tStart)/CLOCKS_PER_SEC);
+            cout << "TIME ELAPSED: " << segs << "s" << endl;
+            cout << "DECISIONS MADE: " << decs << " lits." << endl;
+            cout << "PROPAGATIONS/SECOND: " << (((double)props)/segs) << endl;
             return 20;
         }
         // start new decision level:
