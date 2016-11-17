@@ -10,7 +10,7 @@ using namespace std;
 #define TRUE 1
 #define FALSE 0
 
-#define ADD_HEUR 100
+#define ADD_HEUR 10
 
 uint props;
 uint decs;
@@ -293,7 +293,7 @@ int main(){
         //200 nV*40
         //Better 250 (now) numVars*35
         //Better 300 (now) numVars*50
-    int maxCount = numVars*50;
+    int maxCount = numVars*100;
     //Comencem a comptar el temps de programa:
     clock_t tStart = clock();
     // DPLL algorithm

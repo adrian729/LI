@@ -9,7 +9,7 @@ ALLOBJS = *.o
 
 ALLDRIVOBS = *.exe *.prova
 
-all: SAT-ADR-RH.exe
+all: dist-clean SAT-ADR-RH.exe
 
 allNew: clear all
 
