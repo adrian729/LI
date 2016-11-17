@@ -310,8 +310,8 @@ int main(){
             checkmodel();
             cout << "SATISFIABLE" << endl;
             double segs = ((double)(clock() - tStart)/CLOCKS_PER_SEC);
-            cout << "TIME ELAPSED: " << segs << "s" << endl;
-            cout << "DECISIONS MADE: " << decs << " lits." << endl;
+            cout << "TIME ELAPSED: " << segs << endl;
+            cout << "DECISIONS MADE: " << decs << endl;
             cout << "PROPAGATIONS/SECOND: " << (((double)props)/segs) << endl;
             return 20;
         }
@@ -330,8 +330,8 @@ int main(){
                 //En cas de no poder fer el backtracking INSAT.
                 cout << "UNSATISFIABLE" << endl;
                 double segs = ((double)(clock() - tStart)/CLOCKS_PER_SEC);
-                cout << "TIME ELAPSED: " << segs << "s" << endl;
-                cout << "DECISIONS MADE: " << decs << " lits." << endl;
+                cout << "TIME ELAPSED: " << segs << endl;
+                cout << "DECISIONS MADE: " << decs << endl;
                 cout << "PROPAGATIONS/SECOND: " << (((double)props)/segs) << endl;
                 return 10;
             }
