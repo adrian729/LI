@@ -10,7 +10,7 @@ using namespace std;
 #define TRUE 1
 #define FALSE 0
 
-#define ADD_HEUR 10
+#define ADD_HEUR 3
 
 uint props;
 uint decs;
