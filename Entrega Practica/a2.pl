@@ -14,7 +14,8 @@ solucionOptima:-
 solucionOptima(N,MP):-
 	N > 0, MP >= 0,
 	camino([0,0],[5,4],[[0,0]],C,N,0,MP),!,
-	write(C).
+	reverse(C,CR),
+	write(CR).
 
 % P0
 unPaso([X,Y],[X2,Y2],_):-

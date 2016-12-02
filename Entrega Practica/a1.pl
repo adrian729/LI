@@ -8,7 +8,8 @@ solucionOptima:-
 	nat(N),
 	camino([0,0],[0,4],[[0,0]],C),
 	length(C,N),!,
-	write(C).
+	reverse(C,CR),
+	write(CR).
 
 % llenar X
 unPaso([X,Y],[5,Y]):- X < 5.
