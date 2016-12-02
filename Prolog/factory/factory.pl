@@ -15,7 +15,7 @@ symbolicOutput(0). % set to 1 to see symbolic output only; 0 otherwise.
 %% format:
 %% task( taskID, Duration, ListOFResourcesUsed ).
 %% resource( resourceID, NumUnitsAvailable ).
-:-include(hardmayBe147).  % simple input example file. Try the two given harder ones too!
+:-include(easy152).  % simple input example file. Try the two given harder ones too!
 
 %%%%%% Some helpful definitions to make the code cleaner:
 
@@ -31,37 +31,25 @@ concat([X|L1],L2,[X|L3]):- concat(L1,L2,L3).
 
 % We use the following types of symbolic propositional variables:
 %   start-T-H:  task T starts at hour H     (MANDATORY)
-%   end-T-H
-%   th-T-H
 %   rth-R-T-H
 
 writeClauses(Time):- 
     initClauseGeneration,
-    defineTaskAtHour(Time),
     defineResourceByTaskAtHour(Time),
     eachTaskStartsOnce(Time),
     atMostMaxResource(Time),
     true,!.
 
 % define new vars:
-% th-T-H
-defineTaskAtHour(Time):-
+% rth-R-T-H resource task hour
+defineResourceByTaskAtHour(Time):-
     task(T),duration(T,D),
+    usesResource(T,R),
     hourOfTime(Time,H),
     validTimeOfTask(T,Time,TaskTime),hourOfTime(TaskTime,HS),H >= HS,
     HE is HS + D,H < HE,
-    % start-T-HS -> th-T-H
-    writeClause([\+start-T-HS,th-T-H]),
-    fail.
-defineTaskAtHour(_).
-% rth-R-T-H resource task hour
-defineResourceByTaskAtHour(Time):-
-    task(T),
-    usesResource(T,R),
-    hourOfTime(Time,H),
-    % th-T-H <-> rth-R-T-H
-    writeClause([\+th-T-H,rth-R-T-H]),
-    writeClause([th-T-H,\+rth-R-T-H]),
+    % start-T-HS -> rth-R-T-H
+    writeClause([\+start-T-HS,rth-R-T-H]),
     fail.
 defineResourceByTaskAtHour(_).
 
