@@ -15,7 +15,7 @@ symbolicOutput(0). % set to 1 to see symbolic output only; 0 otherwise.
 %% format:
 %% task( taskID, Duration, ListOFResourcesUsed ).
 %% resource( resourceID, NumUnitsAvailable ).
-:-include(hardMayBe97).  % simple input example file. Try the two given harder ones too!
+:-include(easy152).  % simple input example file. Try the two given harder ones too!
 
 %%%%%% Some helpful definitions to make the code cleaner:
 
@@ -23,9 +23,8 @@ task(T):-              task(T,_,_).
 duration(T,D):-        task(T,D,_).
 usesResource(T,R):-    task(T,_,L), member(R,L).
 hourOfTime(Time,H):-   between(1,Time,H).
-validTimeOfTask(T,Time,ValidTime):- duration(T,D),ValidTime is Time - D + 1.
 
-%% other
+%% concat
 concat([],L2,L2).
 concat([X|L1],L2,[X|L3]):- concat(L1,L2,L3).
 
@@ -45,16 +44,15 @@ writeClauses(Time):-
 % th-T-H
 defineTaskAtHour(Time):-
     task(T),duration(T,D),
-    hourOfTime(Time,H),
-    validTimeOfTask(T,Time,TaskTime),hourOfTime(TaskTime,HS),H >= HS,
-    HE is HS + D,H < HE,
+    ValidTime is Time - D + 1,hourOfTime(ValidTime,HS),HE is HS + D - 1, %HS hora start HE hora fi tasca
+    between(HS,HE,H), % HS <= H <= HE
     % start-T-HS -> th-T-H
     writeClause([\+start-T-HS,th-T-H]),
     fail.
 defineTaskAtHour(_).
 
 eachTaskStartsOnce(Time):-
-    task(T),validTimeOfTask(T,Time,ValidTime),
+    task(T),duration(T,D),ValidTime is Time - D + 1,
     findall(start-T-H,hourOfTime(ValidTime,H),Lits),atLeast(1,Lits),
     fail.
 eachTaskStartsOnce(_).

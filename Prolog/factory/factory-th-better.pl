@@ -55,7 +55,7 @@ defineTaskAtHour(_).
 
 eachTaskStartsOnce(Time):-
     task(T),validTimeOfTask(T,Time,ValidTime),
-    findall(start-T-H,hourOfTime(ValidTime,H),Lits),exactly(1,Lits),
+    findall(start-T-H,hourOfTime(ValidTime,H),Lits),atLeast(1,Lits),
     fail.
 eachTaskStartsOnce(_).
 
