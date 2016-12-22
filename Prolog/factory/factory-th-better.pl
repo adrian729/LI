@@ -15,7 +15,7 @@ symbolicOutput(0). % set to 1 to see symbolic output only; 0 otherwise.
 %% format:
 %% task( taskID, Duration, ListOFResourcesUsed ).
 %% resource( resourceID, NumUnitsAvailable ).
-:-include(hardMayBe97).  % simple input example file. Try the two given harder ones too!
+:-include(easy152).  % simple input example file. Try the two given harder ones too!
 
 %%%%%% Some helpful definitions to make the code cleaner:
 
@@ -55,7 +55,7 @@ defineTaskAtHour(_).
 
 eachTaskStartsOnce(Time):-
     task(T),validTimeOfTask(T,Time,ValidTime),
-    findall(start-T-H,hourOfTime(ValidTime,H),Lits),atLeast(1,Lits),
+    findall(start-T-H,hourOfTime(ValidTime,H),Lits),exactly(1,Lits),
     fail.
 eachTaskStartsOnce(_).
 

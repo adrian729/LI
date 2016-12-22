@@ -15,7 +15,7 @@ symbolicOutput(0). % set to 1 to see symbolic output only; 0 otherwise.
 %% format:
 %% task( taskID, Duration, ListOFResourcesUsed ).
 %% resource( resourceID, NumUnitsAvailable ).
-:-include(hardMayBe97).  % simple input example file. Try the two given harder ones too!
+:-include(easy152).  % simple input example file. Try the two given harder ones too!
 
 %%%%%% Some helpful definitions to make the code cleaner:
 
@@ -37,6 +37,7 @@ concat([X|L1],L2,[X|L3]):- concat(L1,L2,L3).
 writeClauses(Time):- 
     initClauseGeneration,
     defineTaskAtHour(Time),
+    defineResourceByTaskAtHour(Time),
     eachTaskStartsOnce(Time),
     atMostMaxResource(Time),
     true,!.
@@ -52,17 +53,26 @@ defineTaskAtHour(Time):-
     writeClause([\+start-T-HS,th-T-H]),
     fail.
 defineTaskAtHour(_).
+% rth-R-T-H resource task hour
+defineResourceByTaskAtHour(Time):-
+    task(T),
+    usesResource(T,R),
+    hourOfTime(Time,H),
+    % th-T-H -> rth-R-T-H
+    writeClause([\+th-T-H,rth-R-T-H]),
+    fail.
+defineResourceByTaskAtHour(_).
 
 eachTaskStartsOnce(Time):-
     task(T),validTimeOfTask(T,Time,ValidTime),
-    findall(start-T-H,hourOfTime(ValidTime,H),Lits),atLeast(1,Lits),
+    findall(start-T-H,hourOfTime(ValidTime,H),Lits),exactly(1,Lits),
     fail.
 eachTaskStartsOnce(_).
 
 atMostMaxResource(Time):-
     resourceUnits(R,N),
     hourOfTime(Time,H),
-    findall(th-T-H,usesResource(T,R),Lits),atMost(N,Lits),
+    findall(rth-R-T-H,usesResource(T,R),Lits),atMost(N,Lits),
     fail.
 atMostMaxResource(_).
 
@@ -77,7 +87,7 @@ displaySol(_):- nl,nl,   write('    '),
     write('12345678901234567890123456789012345678901234567890123456789012345678901234567890'),
     write('1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678'),nl,fail.
 displaySol(M):- task(T), writeNum2(T), member(start-T-H,M), duration(T,D),
-        B is H-1, writeX(' ',B), writeX('x',D), nl, fail.
+		B is H-1, writeX(' ',B), writeX('x',D), nl, fail.
 displaySol(_):- nl,nl,!.
 
 writeX(_,0):-!.
@@ -105,7 +115,7 @@ main:-
 
 treatResult(20,[]       ):- write('No solution exists.'), nl, halt.
 treatResult(20,BestModel):- nl,nl,write('Optimal solution: '),nl, displaySol(BestModel), halt.
-treatResult(10,_):- %   shell('cat model',_),   
+treatResult(10,_):- %   shell('cat model',_),	
     see(model), symbolicModel(M), seen,  
     hoursUsed(M,K),
     write('plan found that takes '), write(K), write(' hours '),nl,nl, K1 is K-1,

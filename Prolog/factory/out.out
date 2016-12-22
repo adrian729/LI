@@ -1,4 +1,4 @@
-Generated 103872 clauses over 4491 variables. 
+Generated 113958 clauses over 6420 variables. 
 Looking for initial plan that may take the whole week (168h).
 Launching picosat...
 plan found that takes 168 hours 
@@ -7,16 +7,29 @@ plan found that takes 168 hours
 
             10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160
     123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678
- 1:                 xxxxxxxxxxxxxxxxxxx
- 2:                                                                                                                     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 3:                                                                                                     xxxxxxxxxxxxxxxx
- 4:                                                                                                                     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 5:                                                        xxxxxxxxxxxxxxxx
- 6:                                    xxxxxxxxxxxxxxxxxxxx
- 7:                                                                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ 1:                                                                                                                                                      xxxxxxxxxxxxxxxxxxx
+ 2:                                                                                                                                                         xxxxxxxxxxxxxxxx
+ 3:                                                                                                                                                       xxxxxxxxxxxxxxxxxx
+ 4:                                                                                                                                     xxxxxxxxxxxxxxxxxxxx
+ 5:                                                                                                                        xxxxxxxxxxxxx
+ 6:                                                                                                                                                                  xxxxxxx
+ 7:                                                                                                                                                xxxxxxxxxxxxxxxxxx
+ 8:                                                                                                                                           xxxxxxxxxxxx
+ 9:                                                                                                                                   xxxxxxxx
+10:                                                                                                               xxxxxxxxxxxxxxxxxxxx
+11:                                                                                                             xxxxxxxxxxx
+12:                                                                                                                                               xxxxxxxx
+13:                                                                                                                                xxxxxxxxxxxxxxx
+14:                                                                                                                        xxxxxxxx
+15:                                                                                            xxxxxxxxxxxxxxxxxxx
+16:                                                     xxxxxxxxxxxxxxxxxxxxx
+17:                                                                                        xxxxxxxxxxxxxxxxxxxxx
+18:                                                                                      xxxxxxxxxxxxxxxxxxxxxxx
+19:                                                                  xxxxxxxxxxxxxxxxxxxxxx
+20:                                                                       xxxxxxxxxxxxxxxxxxxxx
 
 
-Generated 102644 clauses over 4463 variables. 
+Generated 113248 clauses over 6380 variables. 
 Launching picosat...
 plan found that takes 167 hours 
 
@@ -24,16 +37,29 @@ plan found that takes 167 hours
 
             10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160
     123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678
- 1:                xxxxxxxxxxxxxxxxxxx
- 2:                                                                                                                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 3:                                                                                                    xxxxxxxxxxxxxxxx
- 4:                                                                                                                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 5:                                                       xxxxxxxxxxxxxxxx
- 6:                                   xxxxxxxxxxxxxxxxxxxx
- 7:                                                                       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ 1:                                                                                                                                                     xxxxxxxxxxxxxxxxxxx
+ 2:                                                                                                                                                        xxxxxxxxxxxxxxxx
+ 3:                                                                                                                                                      xxxxxxxxxxxxxxxxxx
+ 4:                                                                                                                                    xxxxxxxxxxxxxxxxxxxx
+ 5:                                                                                                                       xxxxxxxxxxxxx
+ 6:                                                                                                                                                                 xxxxxxx
+ 7:                                                                                                                                               xxxxxxxxxxxxxxxxxx
+ 8:                                                                                                                                          xxxxxxxxxxxx
+ 9:                                                                                                                                  xxxxxxxx
+10:                                                                                                              xxxxxxxxxxxxxxxxxxxx
+11:                                                                                                            xxxxxxxxxxx
+12:                                                                                                                                              xxxxxxxx
+13:                                                                                                                               xxxxxxxxxxxxxxx
+14:                                                                                                                       xxxxxxxx
+15:                                                                                           xxxxxxxxxxxxxxxxxxx
+16:                                                    xxxxxxxxxxxxxxxxxxxxx
+17:                                                                                       xxxxxxxxxxxxxxxxxxxxx
+18:                                                                                     xxxxxxxxxxxxxxxxxxxxxxx
+19:                                                                 xxxxxxxxxxxxxxxxxxxxxx
+20:                                                                      xxxxxxxxxxxxxxxxxxxxx
 
 
-Generated 101423 clauses over 4435 variables. 
+Generated 112538 clauses over 6340 variables. 
 Launching picosat...
 plan found that takes 166 hours 
 
@@ -41,16 +67,29 @@ plan found that takes 166 hours
 
             10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160
     123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678
- 1:               xxxxxxxxxxxxxxxxxxx
- 2:                                                                                                                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 3:                                                                                                   xxxxxxxxxxxxxxxx
- 4:                                                                                                                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 5:                                                      xxxxxxxxxxxxxxxx
- 6:                                  xxxxxxxxxxxxxxxxxxxx
- 7:                                                                      xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ 1:                                                                                                                                                    xxxxxxxxxxxxxxxxxxx
+ 2:                                                                                                                                                       xxxxxxxxxxxxxxxx
+ 3:                                                                                                                                                     xxxxxxxxxxxxxxxxxx
+ 4:                                                                                                                                   xxxxxxxxxxxxxxxxxxxx
+ 5:                                                                                                                      xxxxxxxxxxxxx
+ 6:                                                                                                                                                                xxxxxxx
+ 7:                                                                                                                                              xxxxxxxxxxxxxxxxxx
+ 8:                                                                                                                                         xxxxxxxxxxxx
+ 9:                                                                                                                                 xxxxxxxx
+10:                                                                                                             xxxxxxxxxxxxxxxxxxxx
+11:                                                                                                           xxxxxxxxxxx
+12:                                                                                                                                             xxxxxxxx
+13:                                                                                                                              xxxxxxxxxxxxxxx
+14:                                                                                                                      xxxxxxxx
+15:                                                                                          xxxxxxxxxxxxxxxxxxx
+16:                                                                     xxxxxxxxxxxxxxxxxxxxx
+17:                                                                                      xxxxxxxxxxxxxxxxxxxxx
+18:                                                               xxxxxxxxxxxxxxxxxxxxxxx
+19:                                               xxxxxxxxxxxxxxxxxxxxxx
+20:                                                                     xxxxxxxxxxxxxxxxxxxxx
 
 
-Generated 100209 clauses over 4407 variables. 
+Generated 111828 clauses over 6300 variables. 
 Launching picosat...
 plan found that takes 165 hours 
 
@@ -58,16 +97,29 @@ plan found that takes 165 hours
 
             10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160
     123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678
- 1:              xxxxxxxxxxxxxxxxxxx
- 2:                                                                                                                  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 3:                                                                                                  xxxxxxxxxxxxxxxx
- 4:                                                                                                                  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 5:                                                     xxxxxxxxxxxxxxxx
- 6:                                 xxxxxxxxxxxxxxxxxxxx
- 7:                                                                     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ 1:                                                                                                                                                   xxxxxxxxxxxxxxxxxxx
+ 2:                                                                                                                                                      xxxxxxxxxxxxxxxx
+ 3:                                                                                                                                                    xxxxxxxxxxxxxxxxxx
+ 4:                                                                                                                                  xxxxxxxxxxxxxxxxxxxx
+ 5:                                                                                                                     xxxxxxxxxxxxx
+ 6:                                                                                                                                                               xxxxxxx
+ 7:                                                                                                                                             xxxxxxxxxxxxxxxxxx
+ 8:                                                                                                                                        xxxxxxxxxxxx
+ 9:                                                                                                                                xxxxxxxx
+10:                                                                                                            xxxxxxxxxxxxxxxxxxxx
+11:                                                                                                          xxxxxxxxxxx
+12:                                                                                                                                            xxxxxxxx
+13:                                                                                                                             xxxxxxxxxxxxxxx
+14:                                                                                                                     xxxxxxxx
+15:                                                                                         xxxxxxxxxxxxxxxxxxx
+16:                                                   xxxxxxxxxxxxxxxxxxxxx
+17:                                                                                     xxxxxxxxxxxxxxxxxxxxx
+18:                                                                                   xxxxxxxxxxxxxxxxxxxxxxx
+19:                                                               xxxxxxxxxxxxxxxxxxxxxx
+20:                                                                    xxxxxxxxxxxxxxxxxxxxx
 
 
-Generated 99002 clauses over 4379 variables. 
+Generated 111118 clauses over 6260 variables. 
 Launching picosat...
 plan found that takes 164 hours 
 
@@ -75,16 +127,29 @@ plan found that takes 164 hours
 
             10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160
     123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678
- 1:             xxxxxxxxxxxxxxxxxxx
- 2:                                                                                                                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 3:                                                                                                 xxxxxxxxxxxxxxxx
- 4:                                                                                                                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 5:                                                    xxxxxxxxxxxxxxxx
- 6:                                xxxxxxxxxxxxxxxxxxxx
- 7:                                                                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ 1:                                                                                                                                                  xxxxxxxxxxxxxxxxxxx
+ 2:                                                                                                                                                     xxxxxxxxxxxxxxxx
+ 3:                                                                                                                                                   xxxxxxxxxxxxxxxxxx
+ 4:                                                                                                                                 xxxxxxxxxxxxxxxxxxxx
+ 5:                                                                                                                    xxxxxxxxxxxxx
+ 6:                                                                                                                                                              xxxxxxx
+ 7:                                                                                                                                            xxxxxxxxxxxxxxxxxx
+ 8:                                                                                                                                       xxxxxxxxxxxx
+ 9:                                                                                                                               xxxxxxxx
+10:                                                                                                           xxxxxxxxxxxxxxxxxxxx
+11:                                                                                                         xxxxxxxxxxx
+12:                                                                                                                                           xxxxxxxx
+13:                                                                                                                            xxxxxxxxxxxxxxx
+14:                                                                                                                    xxxxxxxx
+15:                                                                                        xxxxxxxxxxxxxxxxxxx
+16:                                                                   xxxxxxxxxxxxxxxxxxxxx
+17:                                                                                    xxxxxxxxxxxxxxxxxxxxx
+18:                                                             xxxxxxxxxxxxxxxxxxxxxxx
+19:                                             xxxxxxxxxxxxxxxxxxxxxx
+20:                                                                   xxxxxxxxxxxxxxxxxxxxx
 
 
-Generated 97802 clauses over 4351 variables. 
+Generated 110408 clauses over 6220 variables. 
 Launching picosat...
 plan found that takes 163 hours 
 
@@ -92,16 +157,29 @@ plan found that takes 163 hours
 
             10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160
     123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678
- 1:            xxxxxxxxxxxxxxxxxxx
- 2:                                                                                                                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 3:                                                                                                xxxxxxxxxxxxxxxx
- 4:                                                                                                                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 5:                                                   xxxxxxxxxxxxxxxx
- 6:                               xxxxxxxxxxxxxxxxxxxx
- 7:                                                                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ 1:                                                                                                                                                 xxxxxxxxxxxxxxxxxxx
+ 2:                                                                                                                                                    xxxxxxxxxxxxxxxx
+ 3:                                                                                                                                                  xxxxxxxxxxxxxxxxxx
+ 4:                                                                                                                                xxxxxxxxxxxxxxxxxxxx
+ 5:                                                                                                                   xxxxxxxxxxxxx
+ 6:                                                                                                                                                             xxxxxxx
+ 7:                                                                                                                                           xxxxxxxxxxxxxxxxxx
+ 8:                                                                                                                                      xxxxxxxxxxxx
+ 9:                                                                                                                              xxxxxxxx
+10:                                                                                                          xxxxxxxxxxxxxxxxxxxx
+11:                                                                                                        xxxxxxxxxxx
+12:                                                                                                                                          xxxxxxxx
+13:                                                                                                                           xxxxxxxxxxxxxxx
+14:                                                                                                                   xxxxxxxx
+15:                                                                                       xxxxxxxxxxxxxxxxxxx
+16:                                                  xxxxxxxxxxxxxxxxxxxxx
+17:                                                                                   xxxxxxxxxxxxxxxxxxxxx
+18:                                                                                 xxxxxxxxxxxxxxxxxxxxxxx
+19:                                                             xxxxxxxxxxxxxxxxxxxxxx
+20:                                                                  xxxxxxxxxxxxxxxxxxxxx
 
 
-Generated 96609 clauses over 4323 variables. 
+Generated 109698 clauses over 6180 variables. 
 Launching picosat...
 plan found that takes 162 hours 
 
@@ -109,184 +187,25 @@ plan found that takes 162 hours
 
             10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160
     123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678
- 1:           xxxxxxxxxxxxxxxxxxx
- 2:                                                                                                               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 3:                                                                                               xxxxxxxxxxxxxxxx
- 4:                                                                                                               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 5:                                                  xxxxxxxxxxxxxxxx
- 6:                              xxxxxxxxxxxxxxxxxxxx
- 7:                                                                  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ 1:                                                                                                                                                xxxxxxxxxxxxxxxxxxx
+ 2:                                                                                                                                                   xxxxxxxxxxxxxxxx
+ 3:                                                                                                                                                 xxxxxxxxxxxxxxxxxx
+ 4:                                                                                                                               xxxxxxxxxxxxxxxxxxxx
+ 5:                                                                                                                  xxxxxxxxxxxxx
+ 6:                                                                                                                                                            xxxxxxx
+ 7:                                                                                                                                          xxxxxxxxxxxxxxxxxx
+ 8:                                                                                                                                     xxxxxxxxxxxx
+ 9:                                                                                                                             xxxxxxxx
+10:                                                                                                         xxxxxxxxxxxxxxxxxxxx
+11:                                                                                                       xxxxxxxxxxx
+12:                                                                                                                                         xxxxxxxx
+13:                                                                                                                          xxxxxxxxxxxxxxx
+14:                                                                                                                  xxxxxxxx
+15:                                                                                      xxxxxxxxxxxxxxxxxxx
+16:                                                                 xxxxxxxxxxxxxxxxxxxxx
+17:                                                                                  xxxxxxxxxxxxxxxxxxxxx
+18:                                                           xxxxxxxxxxxxxxxxxxxxxxx
+19:                                           xxxxxxxxxxxxxxxxxxxxxx
+20:                                                                 xxxxxxxxxxxxxxxxxxxxx
 
 
-Generated 95423 clauses over 4295 variables. 
-Launching picosat...
-plan found that takes 161 hours 
-
-
-
-            10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160
-    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678
- 1:          xxxxxxxxxxxxxxxxxxx
- 2:                                                                                                              xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 3:                                                                                              xxxxxxxxxxxxxxxx
- 4:                                                                                                              xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 5:                                                 xxxxxxxxxxxxxxxx
- 6:                             xxxxxxxxxxxxxxxxxxxx
- 7:                                                                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-
-Generated 94244 clauses over 4267 variables. 
-Launching picosat...
-plan found that takes 160 hours 
-
-
-
-            10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160
-    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678
- 1:         xxxxxxxxxxxxxxxxxxx
- 2:                                                                                                             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 3:                                                                                             xxxxxxxxxxxxxxxx
- 4:                                                                                                             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 5:                                                xxxxxxxxxxxxxxxx
- 6:                            xxxxxxxxxxxxxxxxxxxx
- 7:                                                                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-
-Generated 93072 clauses over 4239 variables. 
-Launching picosat...
-plan found that takes 159 hours 
-
-
-
-            10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160
-    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678
- 1:        xxxxxxxxxxxxxxxxxxx
- 2:                                                                                                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 3:                                                                                            xxxxxxxxxxxxxxxx
- 4:                                                                                                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 5:                                               xxxxxxxxxxxxxxxx
- 6:                           xxxxxxxxxxxxxxxxxxxx
- 7:                                                               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-
-Generated 91907 clauses over 4211 variables. 
-Launching picosat...
-plan found that takes 158 hours 
-
-
-
-            10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160
-    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678
- 1:       xxxxxxxxxxxxxxxxxxx
- 2:                                                                                                           xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 3:                                                                                           xxxxxxxxxxxxxxxx
- 4:                                                                                                           xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 5:                                              xxxxxxxxxxxxxxxx
- 6:                          xxxxxxxxxxxxxxxxxxxx
- 7:                                                              xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-
-Generated 90749 clauses over 4183 variables. 
-Launching picosat...
-plan found that takes 157 hours 
-
-
-
-            10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160
-    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678
- 1:      xxxxxxxxxxxxxxxxxxx
- 2:                                                                                                          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 3:                                                                                          xxxxxxxxxxxxxxxx
- 4:                                                                                                          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 5:                                             xxxxxxxxxxxxxxxx
- 6:                         xxxxxxxxxxxxxxxxxxxx
- 7:                                                             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-
-Generated 89598 clauses over 4155 variables. 
-Launching picosat...
-plan found that takes 156 hours 
-
-
-
-            10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160
-    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678
- 1:     xxxxxxxxxxxxxxxxxxx
- 2:                                                                                                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 3:                                                                                         xxxxxxxxxxxxxxxx
- 4:                                                                                                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 5:                                            xxxxxxxxxxxxxxxx
- 6:                        xxxxxxxxxxxxxxxxxxxx
- 7:                                                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-
-Generated 88454 clauses over 4127 variables. 
-Launching picosat...
-plan found that takes 155 hours 
-
-
-
-            10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160
-    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678
- 1:    xxxxxxxxxxxxxxxxxxx
- 2:                                                                                                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 3:                                                                                        xxxxxxxxxxxxxxxx
- 4:                                                                                                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 5:                                           xxxxxxxxxxxxxxxx
- 6:                       xxxxxxxxxxxxxxxxxxxx
- 7:                                                           xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-
-Generated 87317 clauses over 4099 variables. 
-Launching picosat...
-plan found that takes 154 hours 
-
-
-
-            10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160
-    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678
- 1:   xxxxxxxxxxxxxxxxxxx
- 2:                                                                                                       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 3:                                                                                       xxxxxxxxxxxxxxxx
- 4:                                                                                                       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 5:                                          xxxxxxxxxxxxxxxx
- 6:                      xxxxxxxxxxxxxxxxxxxx
- 7:                                                          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-
-Generated 86187 clauses over 4071 variables. 
-Launching picosat...
-plan found that takes 153 hours 
-
-
-
-            10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160
-    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678
- 1:  xxxxxxxxxxxxxxxxxxx
- 2:                                                                                                      xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 3:                                                                                      xxxxxxxxxxxxxxxx
- 4:                                                                                                      xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 5:                                         xxxxxxxxxxxxxxxx
- 6:                     xxxxxxxxxxxxxxxxxxxx
- 7:                                                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-
-Generated 85064 clauses over 4043 variables. 
-Launching picosat...
-plan found that takes 152 hours 
-
-
-
-            10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160
-    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678
- 1:                     xxxxxxxxxxxxxxxxxxx
- 2:                                                                                                     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 3:                                                                                     xxxxxxxxxxxxxxxx
- 4:                                                                                                     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 5:                                        xxxxxxxxxxxxxxxx
- 6: xxxxxxxxxxxxxxxxxxxx
- 7:                                                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-
-Generated 83948 clauses over 4015 variables. 
-Launching picosat...

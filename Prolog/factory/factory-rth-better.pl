@@ -1,5 +1,5 @@
 :-dynamic(varNumber/3).
-symbolicOutput(0). % set to 1 to see symbolic output only; 0 otherwise.
+symbolicOutput(1). % set to 1 to see symbolic output only; 0 otherwise.
 
 %% We have a factory of concrete products (beams, walls, roofs) that
 %% works permanently (168h/week).  Every week we plan our production
@@ -15,7 +15,7 @@ symbolicOutput(0). % set to 1 to see symbolic output only; 0 otherwise.
 %% format:
 %% task( taskID, Duration, ListOFResourcesUsed ).
 %% resource( resourceID, NumUnitsAvailable ).
-:-include(hardMayBe97).  % simple input example file. Try the two given harder ones too!
+:-include(easyEasy).  % simple input example file. Try the two given harder ones too!
 
 %%%%%% Some helpful definitions to make the code cleaner:
 
@@ -32,37 +32,37 @@ concat([X|L1],L2,[X|L3]):- concat(L1,L2,L3).
 % We use the following types of symbolic propositional variables:
 %   start-T-H:  task T starts at hour H     (MANDATORY)
 %   th-T-H
-%   rth-R-T-H
 
 writeClauses(Time):- 
     initClauseGeneration,
-    defineTaskAtHour(Time),
+    defineResourceTaskAtHour(Time),
     eachTaskStartsOnce(Time),
     atMostMaxResource(Time),
     true,!.
 
 % define new vars:
 % th-T-H
-defineTaskAtHour(Time):-
+defineResourceTaskAtHour(Time):-
     task(T),duration(T,D),
     hourOfTime(Time,H),
     validTimeOfTask(T,Time,TaskTime),hourOfTime(TaskTime,HS),H >= HS,
     HE is HS + D,H < HE,
-    % start-T-HS -> th-T-H
-    writeClause([\+start-T-HS,th-T-H]),
+    usesResource(T,R),
+    % start-T-HS -> rth-R-T-H
+    writeClause([\+start-T-HS,rth-R-T-H]),
     fail.
-defineTaskAtHour(_).
+defineResourceTaskAtHour(_).
 
 eachTaskStartsOnce(Time):-
     task(T),validTimeOfTask(T,Time,ValidTime),
-    findall(start-T-H,hourOfTime(ValidTime,H),Lits),atLeast(1,Lits),
+    findall(start-T-H,hourOfTime(ValidTime,H),Lits),exactly(1,Lits),
     fail.
 eachTaskStartsOnce(_).
 
 atMostMaxResource(Time):-
     resourceUnits(R,N),
     hourOfTime(Time,H),
-    findall(th-T-H,usesResource(T,R),Lits),atMost(N,Lits),
+    findall(rth-R-T-H,usesResource(T,R),Lits),atMost(N,Lits),
     fail.
 atMostMaxResource(_).
 
