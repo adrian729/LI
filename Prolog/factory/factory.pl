@@ -53,7 +53,12 @@ defineTaskAtHour(_).
 
 eachTaskStartsOnce(Time):-
     task(T),duration(T,D),ValidTime is Time - D + 1,
-    findall(start-T-H,hourOfTime(ValidTime,H),Lits),atLeast(1,Lits),
+    findall(start-T-H,hourOfTime(ValidTime,H),Lits),atLeast(1,Lits), 
+    % amb atLeast poden sortir tasques repetides, pero es molt mes eficient que amb un exactly(1,Lits)
+    % i donara una solucio "valida".  
+    % (amb agafar una de les execucions d'una tasca i ignorar les demes de la mateixa com va dir el Roberto a classe
+    % ja esta).
+    % (diff en el meu ordinador de 17 a 8 segons)  
     fail.
 eachTaskStartsOnce(_).
 

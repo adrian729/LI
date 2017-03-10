@@ -309,4 +309,3 @@ Si s'especifiquen diverses opcions d'aquest tipus, s'interpreten d'esquerra a dr
 
 Genera solucions en ordre descendent de X i, per cada X, les solucions es generen en ordre
 ascendent de Y.
-
